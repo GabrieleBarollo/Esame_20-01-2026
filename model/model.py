@@ -69,6 +69,7 @@ class Model:
         self.soluzione = 0
         self.peso_ottimale = 0
         v = set()
+        v.add(self.obj_i)
         self.rec(self.obj_i, [self.obj_i], v, 0)
 
         return self.soluzione, self.peso_ottimale
@@ -83,14 +84,14 @@ class Model:
             return
         else:
             for n in self.G.neighbors(nodoS):
-                print(n)
                 if n not in visitati and n in self.lista_obj_artisti_filtrati:
-                    p = int(self.G[self.obj_i][n]['weight'])
+                    pp = self.G[nodoS][n]['weight']
                     parziale.append(n)
                     visitati.add(n)
-                    self.rec(n, parziale, visitati, peso+p)
-                    parziale.remove(n)
+                    self.rec(n, parziale, visitati, peso+int(pp))
+                    parziale.pop()
                     visitati.remove(n)
+
 
 
 
